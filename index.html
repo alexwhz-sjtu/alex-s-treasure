@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>文件上传与下载</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        .container {
+            max-width: 400px;
+            margin: 0 auto;
+        }
+        .file-container {
+            margin-bottom: 15px;
+        }
+        .button {
+            display: inline-block;
+            padding: 10px 15px;
+            margin: 5px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>文件上传与下载</h1>
+        
+        <!-- 上传部分 -->
+        <div class="file-container">
+            <label for="upload-date">选择上传日期：</label>
+            <input type="date" id="upload-date">
+            <button class="button" onclick="uploadFile()">上传文件</button>
+            <input type="file" id="file-input" style="display: none;">
+        </div>
+
+        <!-- 下载部分 -->
+        <div class="file-container">
+            <label for="download-date">选择下载日期：</label>
+            <input type="date" id="download-date">
+            <button class="button" onclick="downloadFile()">下载文件</button>
+        </div>
+    </div>
+
+    <script>
+        // 上传文件
+        function uploadFile() {
+            const uploadDate = document.getElementById('upload-date').value;
+            if (!uploadDate) {
+                alert('请选择上传日期！');
+                return;
+            }
+            document.getElementById('file-input').click();
+        }
+
+        // 监听文件选择
+        document.getElementById('file-input').addEventListener('change', function(event) {
+            const file = event.target.files[0];
+            if (file) {
+                alert(`文件 ${file.name} 已选择，上传日期为：${document.getElementById('upload-date').value}`);
+                // 在这里可以添加将文件上传到服务器的代码
+            }
+        });
+
+        // 下载文件
+        function downloadFile() {
+            const downloadDate = document.getElementById('download-date').value;
+            if (!downloadDate) {
+                alert('请选择下载日期！');
+                return;
+            }
+            alert(`您选择的下载日期为：${downloadDate}`);
+            // 在这里可以添加根据日期从服务器获取文件并下载的代码
+            // 示例：创建一个虚拟文件下载
+            const downloadUrl = `https://example.com/files/${downloadDate}.txt`; // 替换为实际的文件URL
+            const link = document.createElement('a');
+            link.href = downloadUrl;
+            link.download = `file-${downloadDate}.txt`;
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+    </script>
+</body>
+</html>
